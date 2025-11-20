@@ -1,0 +1,65 @@
+{% extends 'master.html' %}
+
+{% block title %}
+Result
+{% endblock %}
+
+{% block body %}
+
+<style>
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .item-card {
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+    }
+
+    .item-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    .card-body p {
+        font-size: 14px;
+        color: #4a4a4a;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Uploaded Items</h2>
+
+    <div class="row g-4">
+
+        {% for i in data %}
+        <div class="col-md-4">
+            <div class="card item-card p-3">
+
+                <img src="{{ i.img.url }}" class="card-img-top" alt="Image">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.name }}</h5>
+
+                    <p>{{ i.desc }}</p>
+<a href="{% url 'delete' i.id %}" class="btn btn-alert">Delete</a>
+<a href="{% url 'update' i.id %}" class="btn btn-primary">Update</a>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

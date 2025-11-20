@@ -1,0 +1,106 @@
+{% extends 'master.html' %}
+
+{% block title %}
+Update
+{% endblock %}
+
+{% block body %}
+
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+    }
+
+    .update-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+    }
+
+    .update-card {
+        background: #ffffff;
+        width: 450px;
+        padding: 35px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .update-card h2 {
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .update-card input[type="text"],
+    .update-card input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 18px;
+        border: 1px solid #cfcfcf;
+        border-radius: 8px;
+        outline: none;
+        transition: 0.3s;
+        font-size: 14px;
+    }
+
+    .update-card input:focus {
+        border-color: #4a74ff;
+        box-shadow: 0 0 5px rgba(74, 116, 255, 0.4);
+    }
+
+    .update-card img {
+        border-radius: 10px;
+        border: 2px solid #ddd;
+    }
+
+    .update-card button {
+        width: 100%;
+        padding: 12px;
+        background: #4a74ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .update-card button:hover {
+        background: #334fd1;
+    }
+
+    .back-btn {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+    }
+</style>
+
+<div class="back-btn">
+    <a class="btn btn-success" href="{% url 'result' %}">Back</a>
+</div>
+
+<div class="update-wrapper">
+    <div class="update-card">
+        
+        <h2>Update Item</h2>
+
+        <form action="{% url 'update' data.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" name="name" value="{{ data.name }}" placeholder="Name">
+
+            <input type="text" name="desc" value="{{ data.desc }}" placeholder="Description">
+
+            <label class="mt-3 fw-bold">Current Image:</label><br>
+            <img src="{{ data.img.url }}" width="120" height="120" class="mb-3">
+
+            <input type="file" name="img">
+
+            <button type="submit">Update</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

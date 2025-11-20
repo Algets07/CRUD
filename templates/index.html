@@ -1,0 +1,90 @@
+{% extends 'master.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+
+<style>
+    body {
+        background: #f3f6ff;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .form-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 80px;
+    }
+
+    .form-card {
+        background: #ffffff;
+        width: 380px;
+        padding: 30px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .form-card h2 {
+        margin-bottom: 25px;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .form-card input[type="text"],
+    .form-card input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 18px;
+        border: 1px solid #cfcfcf;
+        border-radius: 8px;
+        outline: none;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .form-card input:focus {
+        border-color: #4a74ff;
+        box-shadow: 0 0 5px rgba(74, 116, 255, 0.4);
+    }
+
+    .form-card button {
+        width: 100%;
+        padding: 12px;
+        background: #4a74ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .form-card button:hover {
+        background: #2d52e4;
+    }
+</style>
+
+<div class="form-wrapper">
+    <div class="form-card">
+        <h2>Upload Form</h2>
+
+        <form action="{% url 'result' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" name="name" placeholder="Enter Name" required>
+
+            <input type="text" name="desc" placeholder="Enter Description" required>
+
+            <input type="file" name="img" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
