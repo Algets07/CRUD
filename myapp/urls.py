@@ -7,6 +7,9 @@ from django.conf import settings
 urlpatterns =[
     path('index/',views.index,name='index'),
     path('result/',views.result,name='result'),
+    path('submit-form/', views.submit_form, name='submit_form'),
+    path('verify-otp/', views.verify_otp, name='verify_otp'),
+    path('resend',views.resend,name='resend'),
 
     path('delete/<int:id>',views.delete_id,name='delete'),
     

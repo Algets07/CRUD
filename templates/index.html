@@ -73,7 +73,7 @@ Home
     <div class="form-card">
         <h2>Upload Form</h2>
 
-        <form action="{% url 'result' %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'submit_form' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <input type="text" name="name" placeholder="Enter Name" required>

@@ -11,20 +11,6 @@ from django.core.mail import send_mail
 from django.conf import settings
 def result(request):
     data = movie.objects.all()
-    if request.method == 'POST':
-        name= request.POST['name']
-        desc= request.POST['desc']
-        img = request.FILES['img']
-        movie.objects.create(name=name,desc=desc,img=img)
-        send_mail(
-    subject="New Student Form Submitted",
-    message=f"Name: {name}\nDesc: {desc}\nForm submitted successfully!",
-    from_email=settings.EMAIL_HOST_USER,
-    recipient_list=["algetes2004@gmail.com"],
-    fail_silently=False
-)
-
-        return redirect('result')
     return render(request, 'result.html',{'data':data})
 
 def delete_id(request,id):
@@ -103,4 +89,84 @@ def login_page(request):
 def logout_page(request):
     logout(request)
     return redirect("login")
+
+import random
+
+def submit_form(request):
+    if request.method == 'POST':
+
+        # STORE form data temporarily in session
+        request.session['name'] = request.POST['name']
+        request.session['desc'] = request.POST['desc']
+        request.session['img'] = request.FILES['img'].name  # store filename only
+
+        # Save image temporarily to session folder
+        img_file = request.FILES['img']
+        request.session['uploaded_image'] = img_file.name
+
+        # Generate OTP
+        otp = random.randint(100000, 999999)
+        request.session['otp'] = otp
+        request.session.set_expiry(30)
+
+        # Send OTP Email
+        send_mail(
+            subject="Your OTP Code",
+            message=f"Your OTP is {otp}",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=["algetes2004@gmail.com"],
+            fail_silently=False,
+        )
+
+        # Store uploaded file in temp folder
+        with open("media" + img_file.name, "wb+") as dest:
+            for chunk in img_file.chunks():
+                dest.write(chunk)
+
+        return redirect('verify_otp')
+
+    return redirect('index')
+
+def verify_otp(request):
+    if request.method == "POST":
+        user_otp = request.POST['otp']
+        session_otp = str(request.session['otp'])
+
+        if user_otp == session_otp:
+
+            # RETRIEVE SAVED DATA
+            name = request.session['name']
+            desc = request.session['desc']
+            img_name = request.session['uploaded_image']
+
+            # Move image from temp to main folder
+            from django.core.files import File
+            f = open("media" + img_name, "rb")
+            
+            movie.objects.create(
+                name=name,
+                desc=desc,
+                img=File(f)
+            )
+            f.close()
+
+            return redirect('result')
+
+        return render(request, "otp.html", {'msg': 'Invalid OTP!'})
+
+    return render(request, 'otp.html')
+
  
+def resend(request):
+    import random
+    new_otp = random.randint(100000, 999999)
+    request.session['otp'] = new_otp
+    request.session.set_expiry(30)
+    send_mail(
+            subject="Your OTP Code",
+            message=f"Your OTP is {new_otp}",
+            from_email=settings.EMAIL_HOST_USER,
+            recipient_list=["algetes2004@gmail.com"],
+            fail_silently=False,
+        )
+    return redirect('verify_otp')

@@ -76,9 +76,7 @@ Update
     }
 </style>
 
-<div class="back-btn">
-    <a class="btn btn-success" href="{% url 'result' %}">Back</a>
-</div>
+
 
 <div class="update-wrapper">
     <div class="update-card">
@@ -97,7 +95,9 @@ Update
 
             <input type="file" name="img">
 
-            <button type="submit">Update</button>
+            <button type="submit">Update</button><br><br>
+    <a class="btn btn-outline-dark" href="{% url 'result' %}">Back</a>
+
         </form>
 
     </div>

@@ -1,0 +1,53 @@
+{% extends 'master.html' %}
+
+{% block title %}
+Enter OTP
+{% endblock %}
+
+{% block body %}
+<style>
+    .otp-container {
+        max-width: 400px;
+        margin: 80px auto;
+        padding: 30px;
+        border-radius: 15px;
+        background: #f8f9fa;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .otp-input {
+        height: 50px;
+        font-size: 20px;
+        text-align: center;
+        letter-spacing: 5px;
+    }
+
+    .resend-link {
+        display: inline-block;
+        margin-top: 12px;
+        font-size: 14px;
+    }
+</style>
+
+<div class="otp-container">
+
+    <h3 class="mb-4">🔐 Verify OTP</h3>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="otp" maxlength="6" class="form-control otp-input mb-3"
+               placeholder="Enter 6-digit OTP" required>
+
+        <button class="btn btn-danger w-100 mb-2">Verify</button>
+
+        <a href="{% url 'resend' %}" class="btn btn-outline-dark">Resend OTP</a>
+
+        {% if msg %}
+            <p class="text-danger mt-3">{{ msg }}</p>
+        {% endif %}
+    </form>
+
+</div>
+{% endblock %}

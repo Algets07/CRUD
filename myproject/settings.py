@@ -129,6 +129,8 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "teramediainfo@gmail.com"
 EMAIL_HOST_PASSWORD = "hgqnkearalskvkah"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
