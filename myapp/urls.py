@@ -10,9 +10,7 @@ urlpatterns =[
     path('submit-form/', views.submit_form, name='submit_form'),
     path('verify-otp/', views.verify_otp, name='verify_otp'),
     path('resend',views.resend,name='resend'),
-
     path('delete/<int:id>',views.delete_id,name='delete'),
-    
     path('update/<int:id>',views.update_id,name='update'),
     path('register/',views.register_page,name='register'),
     path('',views.login_page,name='login'),

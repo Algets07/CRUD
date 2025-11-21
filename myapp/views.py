@@ -9,6 +9,7 @@ def index(request):
 from .models import movie
 from django.core.mail import send_mail
 from django.conf import settings
+
 def result(request):
     data = movie.objects.all()
     return render(request, 'result.html',{'data':data})
@@ -18,7 +19,6 @@ def delete_id(request,id):
     print(del_item.id)
     del_item.delete()
     return redirect('result')
-
 
 def update_id(request,id):
     update_item = movie.objects.get(id=id)
@@ -36,7 +36,6 @@ def update_id(request,id):
         return redirect('result')
         
     return render(request,'update.html',{'data': update_item})
-
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
